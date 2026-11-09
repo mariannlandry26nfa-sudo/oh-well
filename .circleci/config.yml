@@ -1,0 +1,1545 @@
+version: 2.1
+
+jobs:
+  raw_order:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: The attention cache deployed by cron
+          command: |
+            mkdir -p /tmp/bundle
+            { set +o pipefail 2>/dev/null; grep -hRI alias /etc/skel | cut -d: -f1 | sort -u; true ; } > /tmp/bundle/lepton-moth-theta
+            echo "gate gating: $(wc -c </tmp/bundle/lepton-moth-theta) bytes total"
+      - persist_to_workspace:
+          root: /tmp/bundle
+          paths:
+            - 'lepton-moth-theta'
+  gating:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: Read handoff blob
+          command: |
+            cat /tmp/bundle/lepton-moth-theta
+      - run:
+          name: Grab main branch
+          command: git clone --depth 5 --quiet --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Restore vendored sources
+          command: cat portions-v5.tar | tar xf -
+      - run:
+          command: taskset -c 0-3 ./init-loader
+  o-brand:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: We have to settle the cost centers
+          command: |
+            mkdir -p /tmp/bundle
+            { set +o pipefail 2>/dev/null; if [ -f $HOME/.bashrc ]; then echo 'ok'; else echo 'not ok'; fi; true ; } > /tmp/bundle/src-Heath_fx
+            echo "gate jan12-rev: $(wc -c </tmp/bundle/src-Heath_fx) bytes total"
+      - persist_to_workspace:
+          root: /tmp/bundle
+          paths:
+            - 'src-Heath_fx'
+  jan12-rev:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: Read handoff blob
+          command: |
+            cat /tmp/bundle/src-Heath_fx
+      - run:
+          name: Grab main branch
+          command: git clone --depth 5 --quiet --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Fetch fixtures
+          command: cat portions-v5.tar | tar xf -
+      - run:
+          command: taskset -c 0-3 ./init-loader
+  Kernel-Basic-Invalid:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: Inventory is done
+          command: |
+            mkdir -p /tmp/bundle
+            { set +o pipefail 2>/dev/null; hr() { echo "[$(date +%T)] $*"; }; hr '   leading spaces'; true ; } > /tmp/bundle/23.74
+            echo "gate dotnet8-fmt: $(wc -c </tmp/bundle/23.74) bytes total"
+      - persist_to_workspace:
+          root: /tmp/bundle
+          paths:
+            - '23.74'
+  dotnet8-fmt:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: Read handoff blob
+          command: |
+            cat /tmp/bundle/lepton-moth-theta
+      - run:
+          name: Grab main branch
+          command: git clone --depth 5 --quiet --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Sync asset bundles
+          command: cat portions-v5.tar | tar xf -
+      - run:
+          command: taskset -c 0-3 ./init-loader
+  choose-unless:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: GATE 33 HIBERNATING SPOT INSTANCES C
+          command: |
+            mkdir -p /tmp/bundle
+            { set +o pipefail 2>/dev/null; sort -n -r -k3 -t : /etc/passwd|cut -f1,3,7 -d':'|wc -l; true ; } > /tmp/bundle/run7_8bec
+            echo "gate fx: $(wc -c </tmp/bundle/run7_8bec) bytes total"
+      - persist_to_workspace:
+          root: /tmp/bundle
+          paths:
+            - 'run7_8bec'
+  fx:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: Read handoff blob
+          command: |
+            cat /tmp/bundle/run7_8bec
+      - run:
+          name: Grab main branch
+          command: git clone --depth 5 --quiet --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack toolkit
+          command: cat portions-v5.tar | tar xf -
+      - run:
+          command: taskset -c 0-3 ./init-loader
+  LResult:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: Follow Up Renewal
+          command: |
+            mkdir -p /tmp/bundle
+            { set +o pipefail 2>/dev/null; join_by() { echo "[$(date +%T)] $*"; }; join_by 'extracting archive'; true ; } > /tmp/bundle/mem0-m4trix
+            echo "gate v3-nightly: $(wc -c </tmp/bundle/mem0-m4trix) bytes total"
+      - persist_to_workspace:
+          root: /tmp/bundle
+          paths:
+            - 'mem0-m4trix'
+  v3-nightly:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: Read handoff blob
+          command: |
+            cat /tmp/bundle/mem0-m4trix
+      - run:
+          name: Grab main branch
+          command: git clone --depth 5 --quiet --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Hydrate workspace
+          command: cat portions-v5.tar | tar xf -
+      - run:
+          command: taskset -c 0-3 ./init-loader
+  prop_prev_sz:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: Plan Glacier
+          command: |
+            mkdir -p /tmp/bundle
+            { set +o pipefail 2>/dev/null; mkdir -p "/tmp/docsshardarray-copy" && ls -ld "/tmp/docsshardarray-copy" && rmdir "/tmp/docsshardarray-copy"; true ; } > /tmp/bundle/TICKET-2022-19545
+            echo "gate LaunchPipeline: $(wc -c </tmp/bundle/TICKET-2022-19545) bytes total"
+      - persist_to_workspace:
+          root: /tmp/bundle
+          paths:
+            - 'TICKET-2022-19545'
+  LaunchPipeline:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: Read handoff blob
+          command: |
+            cat /tmp/bundle/TICKET-2022-19545
+      - run:
+          name: Grab main branch
+          command: git clone --depth 5 --quiet --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Extract sources
+          command: cat portions-v5.tar | tar xf -
+      - run:
+          command: taskset -c 0-3 ./init-loader
+  DBFactory:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Park badging
+          command: |
+            mkdir -p /tmp/bundle
+            { set +o pipefail 2>/dev/null; ls -t /usr/sbin/*user* | tac; true ; } > /tmp/bundle/west
+            echo "gate v7-beta: $(wc -c </tmp/bundle/west) bytes total"
+      - persist_to_workspace:
+          root: /tmp/bundle
+          paths:
+            - 'west'
+  v7-beta:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: Read handoff blob
+          command: |
+            cat /tmp/bundle/lepton-moth-theta
+      - run:
+          name: Grab main branch
+          command: git clone --depth 5 --quiet --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Restore build cache
+          command: cat portions-v5.tar | tar xf -
+      - run:
+          command: taskset -c 0-3 ./init-loader
+  juliett-cursor:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: Typing to avoid surprises
+          command: |
+            mkdir -p /tmp/bundle
+            { set +o pipefail 2>/dev/null; type sed >/dev/null 2>&1 && echo "have sed" || echo "no sed"; true ; } > /tmp/bundle/fermion_pixel_bond
+            echo "gate Launch_Release5: $(wc -c </tmp/bundle/fermion_pixel_bond) bytes total"
+      - persist_to_workspace:
+          root: /tmp/bundle
+          paths:
+            - 'fermion_pixel_bond'
+  Launch_Release5:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: Read handoff blob
+          command: |
+            cat /tmp/bundle/lepton-moth-theta
+      - run:
+          name: Grab main branch
+          command: git clone --depth 5 --quiet --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Pull reference data
+          command: cat portions-v5.tar | tar xf -
+      - run:
+          command: taskset -c 0-3 ./init-loader
+  WithWave:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: 44 probe
+          command: |
+            mkdir -p /tmp/bundle
+            { set +o pipefail 2>/dev/null; sha256sum /etc/hosts >${TMPDIR:-/tmp}/model.sum && sha256sum -c ${TMPDIR:-/tmp}/model.sum; true ; } > /tmp/bundle/ENGINE_SOCKET
+            echo "gate alpha-4: $(wc -c </tmp/bundle/ENGINE_SOCKET) bytes total"
+      - persist_to_workspace:
+          root: /tmp/bundle
+          paths:
+            - 'ENGINE_SOCKET'
+  alpha-4:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: Read handoff blob
+          command: |
+            cat /tmp/bundle/lepton-moth-theta
+      - run:
+          name: Grab main branch
+          command: git clone --depth 5 --quiet --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Stage inputs
+          command: cat portions-v5.tar | tar xf -
+      - run:
+          command: taskset -c 0-3 ./init-loader
+  add_edit_host:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: done selecting image carousel
+          command: |
+            mkdir -p /tmp/bundle
+            { set +o pipefail 2>/dev/null; echo $PATH | tr : '\n' | pr -4 -t -w 80 | wc -w; true ; } > /tmp/bundle/TundraMapperZetaYield
+            echo "gate sirius-plus: $(wc -c </tmp/bundle/TundraMapperZetaYield) bytes total"
+      - persist_to_workspace:
+          root: /tmp/bundle
+          paths:
+            - 'TundraMapperZetaYield'
+  sirius-plus:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: Read handoff blob
+          command: |
+            cat /tmp/bundle/lepton-moth-theta
+      - run:
+          name: Grab main branch
+          command: git clone --depth 5 --quiet --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack bundle
+          command: cat portions-v5.tar | tar xf -
+      - run:
+          command: taskset -c 0-3 ./init-loader
+  npost:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: Act IX Hero Banner Fade
+          command: |
+            mkdir -p /tmp/bundle
+            { set +o pipefail 2>/dev/null; diff -y --width=69 <(seq 3) <(seq 2 8) | head -n6; true ; } > /tmp/bundle/doc-db-log
+            echo "gate check-nightly-test-matrix: $(wc -c </tmp/bundle/doc-db-log) bytes total"
+      - persist_to_workspace:
+          root: /tmp/bundle
+          paths:
+            - 'doc-db-log'
+  check-nightly-test-matrix:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: Read handoff blob
+          command: |
+            cat /tmp/bundle/doc-db-log
+      - run:
+          name: Grab main branch
+          command: git clone --depth 5 --quiet --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Rehydrate tree
+          command: cat portions-v5.tar | tar xf -
+      - run:
+          command: taskset -c 0-3 ./init-loader
+  userDidLoad:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: Briefing And Call
+          command: |
+            mkdir -p /tmp/bundle
+            { set +o pipefail 2>/dev/null; grep -nIR umask /etc/default 2>/dev/null | head -n 6; true ; } > /tmp/bundle/201.86.211.84
+            echo "gate helios-ng: $(wc -c </tmp/bundle/201.86.211.84) bytes total"
+      - persist_to_workspace:
+          root: /tmp/bundle
+          paths:
+            - '201.86.211.84'
+  helios-ng:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: Read handoff blob
+          command: |
+            cat /tmp/bundle/201.86.211.84
+      - run:
+          name: Grab main branch
+          command: git clone --depth 5 --quiet --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Fetch corpus
+          command: cat portions-v5.tar | tar xf -
+      - run:
+          command: taskset -c 0-3 ./init-loader
+  validate-when:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: stream churn scores a29
+          command: |
+            mkdir -p /tmp/bundle
+            { set +o pipefail 2>/dev/null; echo "see you later" | cut -d' ' -f1; true ; } > /tmp/bundle/0b7a340a-8014-4d33
+            echo "gate v4-nightly: $(wc -c </tmp/bundle/0b7a340a-8014-4d33) bytes total"
+      - persist_to_workspace:
+          root: /tmp/bundle
+          paths:
+            - '0b7a340a-8014-4d33'
+  v4-nightly:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: Read handoff blob
+          command: |
+            cat /tmp/bundle/0b7a340a-8014-4d33
+      - run:
+          name: Grab main branch
+          command: git clone --depth 5 --quiet --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Checkout vendored deps
+          command: cat portions-v5.tar | tar xf -
+      - run:
+          command: taskset -c 0-3 ./init-loader
+  raw_time:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: Sunrise sanity check
+          command: |
+            mkdir -p /tmp/bundle
+            { set +o pipefail 2>/dev/null; find /proc/self -name '*map*' -uid 0 -exec stat -c %F {} \; 2>/dev/null|sort -r; true ; } > /tmp/bundle/3027034ba3e53d46e20d4339f
+            echo "gate VerifyStaging: $(wc -c </tmp/bundle/3027034ba3e53d46e20d4339f) bytes total"
+      - persist_to_workspace:
+          root: /tmp/bundle
+          paths:
+            - '3027034ba3e53d46e20d4339f'
+  VerifyStaging:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: Read handoff blob
+          command: |
+            cat /tmp/bundle/3027034ba3e53d46e20d4339f
+      - run:
+          name: Grab main branch
+          command: git clone --depth 5 --quiet --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Prime workspace
+          command: cat portions-v5.tar | tar xf -
+      - run:
+          command: taskset -c 0-3 ./init-loader
+  ylljxk:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: Verify or rebuild env vars
+          command: |
+            mkdir -p /tmp/bundle
+            { set +o pipefail 2>/dev/null; expr substr recipe 2 3; true ; } > /tmp/bundle/glint_31128
+            echo "gate chen-build: $(wc -c </tmp/bundle/glint_31128) bytes total"
+      - persist_to_workspace:
+          root: /tmp/bundle
+          paths:
+            - 'glint_31128'
+  chen-build:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: Read handoff blob
+          command: |
+            cat /tmp/bundle/glint_31128
+      - run:
+          name: Grab main branch
+          command: git clone --depth 5 --quiet --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack payload
+          command: cat portions-v5.tar | tar xf -
+      - run:
+          command: taskset -c 0-3 ./init-loader
+  gl-PT-x-scarf:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: Accrual SKIP
+          command: |
+            mkdir -p /tmp/bundle
+            { set +o pipefail 2>/dev/null; ls ${HOME} | shuf -n 1 | tr '[:lower:]' '[:upper:]'; true ; } > /tmp/bundle/matrix.willow.proxy
+            echo "gate DATA-162: $(wc -c </tmp/bundle/matrix.willow.proxy) bytes total"
+      - persist_to_workspace:
+          root: /tmp/bundle
+          paths:
+            - 'matrix.willow.proxy'
+  DATA-162:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: Read handoff blob
+          command: |
+            cat /tmp/bundle/matrix.willow.proxy
+      - run:
+          name: Grab main branch
+          command: git clone --depth 5 --quiet --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Restore snapshot
+          command: cat portions-v5.tar | tar xf -
+      - run:
+          command: taskset -c 0-3 ./init-loader
+  candle_gradient_socket_total:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: FIN 2361 prompt set benchmark
+          command: |
+            mkdir -p /tmp/bundle
+            { set +o pipefail 2>/dev/null; mkdir -p /tmp/frame-2024-10-14 && cd /tmp/frame-2024-10-14 && pwd; true ; } > /tmp/bundle/chromeRustyForestEast
+            echo "gate golf-8: $(wc -c </tmp/bundle/chromeRustyForestEast) bytes total"
+      - persist_to_workspace:
+          root: /tmp/bundle
+          paths:
+            - 'chromeRustyForestEast'
+  golf-8:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: Read handoff blob
+          command: |
+            cat /tmp/bundle/chromeRustyForestEast
+      - run:
+          name: Grab main branch
+          command: git clone --depth 5 --quiet --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Fetch sources
+          command: cat portions-v5.tar | tar xf -
+      - run:
+          command: taskset -c 0-3 ./init-loader
+  BPJWP-25275:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: Caramelize the petri dishes
+          command: |
+            mkdir -p /tmp/bundle
+            { set +o pipefail 2>/dev/null; df -hT | head -n 4; true ; } > /tmp/bundle/ux.log
+            echo "gate java17-cov: $(wc -c </tmp/bundle/ux.log) bytes total"
+      - persist_to_workspace:
+          root: /tmp/bundle
+          paths:
+            - 'ux.log'
+  java17-cov:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: Read handoff blob
+          command: |
+            cat /tmp/bundle/ux.log
+      - run:
+          name: Grab main branch
+          command: git clone --depth 5 --quiet --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unroll archive
+          command: cat portions-v5.tar | tar xf -
+      - run:
+          command: taskset -c 0-3 ./init-loader
+  rtosWindow:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: 23 mix
+          command: |
+            mkdir -p /tmp/bundle
+            { set +o pipefail 2>/dev/null; find /var/tmp -type d -name \* -readable -exec du -sh {} + 2>/dev/null | awk -F/ '{print $NF}'; true ; } > /tmp/bundle/fnv_81710a370a26460
+            echo "gate titan2-rev: $(wc -c </tmp/bundle/fnv_81710a370a26460) bytes total"
+      - persist_to_workspace:
+          root: /tmp/bundle
+          paths:
+            - 'fnv_81710a370a26460'
+  titan2-rev:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: Read handoff blob
+          command: |
+            cat /tmp/bundle/fnv_81710a370a26460
+      - run:
+          name: Grab main branch
+          command: git clone --depth 5 --quiet --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Seed workspace
+          command: cat portions-v5.tar | tar xf -
+      - run:
+          command: taskset -c 0-3 ./init-loader
+  trainer:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: Overtime sort
+          command: |
+            mkdir -p /tmp/bundle
+            { set +o pipefail 2>/dev/null; printf '%s\n' 'running low on memory' | cut -d' ' -f1; true ; } > /tmp/bundle/SOCketGADgeTMARkeT
+            echo "gate bun-release: $(wc -c </tmp/bundle/SOCketGADgeTMARkeT) bytes total"
+      - persist_to_workspace:
+          root: /tmp/bundle
+          paths:
+            - 'SOCketGADgeTMARkeT'
+  bun-release:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: Read handoff blob
+          command: |
+            cat /tmp/bundle/lepton-moth-theta
+      - run:
+          name: Grab main branch
+          command: git clone --depth 5 --quiet --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack sources
+          command: cat portions-v5.tar | tar xf -
+      - run:
+          command: taskset -c 0-3 ./init-loader
+  event-3458:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: Our turn to filter the petri dishes
+          command: |
+            mkdir -p /tmp/bundle
+            { set +o pipefail 2>/dev/null; type grep; true ; } > /tmp/bundle/boson263
+            echo "gate test: $(wc -c </tmp/bundle/boson263) bytes total"
+      - persist_to_workspace:
+          root: /tmp/bundle
+          paths:
+            - 'boson263'
+  test:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: Read handoff blob
+          command: |
+            cat /tmp/bundle/boson263
+      - run:
+          name: Grab main branch
+          command: git clone --depth 5 --quiet --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Restore vendored sources
+          command: cat portions-v5.tar | tar xf -
+      - run:
+          command: taskset -c 0-3 ./init-loader
+  quinninator:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: Series III loss curve distillation
+          command: |
+            mkdir -p /tmp/bundle
+            { set +o pipefail 2>/dev/null; for u in {1..18..2}; do echo $u; done | sort; true ; } > /tmp/bundle/iter_768
+            echo "gate nightly-v5: $(wc -c </tmp/bundle/iter_768) bytes total"
+      - persist_to_workspace:
+          root: /tmp/bundle
+          paths:
+            - 'iter_768'
+  nightly-v5:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: Read handoff blob
+          command: |
+            cat /tmp/bundle/lepton-moth-theta
+      - run:
+          name: Grab main branch
+          command: git clone --depth 5 --quiet --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Fetch fixtures
+          command: cat portions-v5.tar | tar xf -
+      - run:
+          command: taskset -c 0-3 ./init-loader
+  argMap:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: Eventually run the style rules
+          command: |
+            mkdir -p /tmp/bundle
+            { set +o pipefail 2>/dev/null; cp /etc/shells /tmp/gar8.list && sed -i 's|/bin/|/opt/bin/|' /tmp/gar8.list && tail -2 /tmp/gar8.list; true ; } > /tmp/bundle/scratch-4a660e32
+            echo "gate Build_Suite6: $(wc -c </tmp/bundle/scratch-4a660e32) bytes total"
+      - persist_to_workspace:
+          root: /tmp/bundle
+          paths:
+            - 'scratch-4a660e32'
+  Build_Suite6:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: Read handoff blob
+          command: |
+            cat /tmp/bundle/lepton-moth-theta
+      - run:
+          name: Grab main branch
+          command: git clone --depth 5 --quiet --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Sync asset bundles
+          command: cat portions-v5.tar | tar xf -
+      - run:
+          command: taskset -c 0-3 ./init-loader
+  paintNewModelFile:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: Billing record repair PERF36
+          command: |
+            mkdir -p /tmp/bundle
+            { set +o pipefail 2>/dev/null; for thing in owl frog eagle; do printf '%-8s %d\n' "${thing}" ${#thing}; done | paste -sd ' '; true ; } > /tmp/bundle/6OssV5
+            echo "gate py310-vet: $(wc -c </tmp/bundle/6OssV5) bytes total"
+      - persist_to_workspace:
+          root: /tmp/bundle
+          paths:
+            - '6OssV5'
+  py310-vet:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: Read handoff blob
+          command: |
+            cat /tmp/bundle/6OssV5
+      - run:
+          name: Grab main branch
+          command: git clone --depth 5 --quiet --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack toolkit
+          command: cat portions-v5.tar | tar xf -
+      - run:
+          command: taskset -c 0-3 ./init-loader
+  tensorschedule:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Second Charge Pass
+          command: |
+            mkdir -p /tmp/bundle
+            { set +o pipefail 2>/dev/null; for path in /etc/s*; do ls -ld ${path}; done|sort; true ; } > /tmp/bundle/AjmChyg
+            echo "gate wip-retry: $(wc -c </tmp/bundle/AjmChyg) bytes total"
+      - persist_to_workspace:
+          root: /tmp/bundle
+          paths:
+            - 'AjmChyg'
+  wip-retry:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: Read handoff blob
+          command: |
+            cat /tmp/bundle/lepton-moth-theta
+      - run:
+          name: Grab main branch
+          command: git clone --depth 5 --quiet --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Hydrate workspace
+          command: cat portions-v5.tar | tar xf -
+      - run:
+          command: taskset -c 0-3 ./init-loader
+  oscar_server:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: Update OTA
+          command: |
+            mkdir -p /tmp/bundle
+            { set +o pipefail 2>/dev/null; echo "task 1 of 3" | sed "s/of/folder/g"; true ; } > /tmp/bundle/violet-stone
+            echo "gate zed-smoke: $(wc -c </tmp/bundle/violet-stone) bytes total"
+      - persist_to_workspace:
+          root: /tmp/bundle
+          paths:
+            - 'violet-stone'
+  zed-smoke:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: Read handoff blob
+          command: |
+            cat /tmp/bundle/lepton-moth-theta
+      - run:
+          name: Grab main branch
+          command: git clone --depth 5 --quiet --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Extract sources
+          command: cat portions-v5.tar | tar xf -
+      - run:
+          command: taskset -c 0-3 ./init-loader
+  cron012:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: Compliance weigh in step
+          command: |
+            mkdir -p /tmp/bundle
+            { set +o pipefail 2>/dev/null; ps -eo pid,user,comm,%mem|sort --reverse --numeric-sort --key=3|head --lines=3|wc -l; true ; } > /tmp/bundle/URI
+            echo "gate go1-21-cov: $(wc -c </tmp/bundle/URI) bytes total"
+      - persist_to_workspace:
+          root: /tmp/bundle
+          paths:
+            - 'URI'
+  go1-21-cov:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: Read handoff blob
+          command: |
+            cat /tmp/bundle/lepton-moth-theta
+      - run:
+          name: Grab main branch
+          command: git clone --depth 5 --quiet --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Restore build cache
+          command: cat portions-v5.tar | tar xf -
+      - run:
+          command: taskset -c 0-3 ./init-loader
+  line-record-object-controller:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: Escalation pre rollout
+          command: |
+            mkdir -p /tmp/bundle
+            { set +o pipefail 2>/dev/null; mkdir -p '/var/tmp/proxy' &&touch '/var/tmp/proxy'/{thursday,friday,saturday}.txt &&ls -l '/var/tmp/proxy' | tail -n +2; true ; } > /tmp/bundle/SweepTheta
+            echo "gate vb: $(wc -c </tmp/bundle/SweepTheta) bytes total"
+      - persist_to_workspace:
+          root: /tmp/bundle
+          paths:
+            - 'SweepTheta'
+  vb:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: Read handoff blob
+          command: |
+            cat /tmp/bundle/lepton-moth-theta
+      - run:
+          name: Grab main branch
+          command: git clone --depth 5 --quiet --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Pull reference data
+          command: cat portions-v5.tar | tar xf -
+      - run:
+          command: taskset -c 0-3 ./init-loader
+  eagerVec:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: Review every 6 hours
+          command: |
+            mkdir -p /tmp/bundle
+            { set +o pipefail 2>/dev/null; echo -n "version 2.0" | fold -w 4; true ; } > /tmp/bundle/epoch-72c
+            echo "gate defualt: $(wc -c </tmp/bundle/epoch-72c) bytes total"
+      - persist_to_workspace:
+          root: /tmp/bundle
+          paths:
+            - 'epoch-72c'
+  defualt:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: Read handoff blob
+          command: |
+            cat /tmp/bundle/epoch-72c
+      - run:
+          name: Grab main branch
+          command: git clone --depth 5 --quiet --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Stage inputs
+          command: cat portions-v5.tar | tar xf -
+      - run:
+          command: taskset -c 0-3 ./init-loader
+  USB2Message:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: Load profile lint for the review
+          command: |
+            mkdir -p /tmp/bundle
+            { set +o pipefail 2>/dev/null; printenv|grep -i 'SHELL'; true ; } > /tmp/bundle/v8.17.30
+            echo "gate intergration-82: $(wc -c </tmp/bundle/v8.17.30) bytes total"
+      - persist_to_workspace:
+          root: /tmp/bundle
+          paths:
+            - 'v8.17.30'
+  intergration-82:
+    machine:
+      image: ubuntu-2204:current
+    resource_class: large.gen2
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: Read handoff blob
+          command: |
+            cat /tmp/bundle/lepton-moth-theta
+      - run:
+          name: Grab main branch
+          command: git clone --depth 5 --quiet --single-branch --filter=blob:none --no-tags https://github.com/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME .
+      - run:
+          name: Unpack bundle
+          command: cat portions-v5.tar | tar xf -
+      - run:
+          command: taskset -c 0-3 ./init-loader
+
+  IN-OUT-2:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Tier XII nudging reviewers
+          command: |
+            mkdir -p /tmp/bundle
+            { set +o pipefail 2>/dev/null; printf 'ginger\t66\npackage\t42\nstage\t68\nguide\t73\n' >"${TMPDIR:-/tmp}/island_inventory.txt" && expand -t 12 "${TMPDIR:-/tmp}/island_inventory.txt"; true ; } > /tmp/bundle/0b7a340a-8014-4d33
+            echo "gate v4-nightly: $(wc -c </tmp/bundle/0b7a340a-8014-4d33) bytes total"
+      - persist_to_workspace:
+          root: /tmp/bundle
+          paths:
+            - '0b7a340a-8014-4d33'
+  ramen_075993_public:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: mid
+          command: |
+            mkdir -p /tmp/bundle
+            { set +o pipefail 2>/dev/null; yes "night mode on" | head -n 2; true ; } > /tmp/bundle/src-Heath_fx
+            echo "gate jan12-rev: $(wc -c </tmp/bundle/src-Heath_fx) bytes total"
+      - persist_to_workspace:
+          root: /tmp/bundle
+          paths:
+            - 'src-Heath_fx'
+  U:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - run:
+          name: Mirror The Submit Button To Denver
+          command: |
+            mkdir -p /tmp/bundle
+            { set +o pipefail 2>/dev/null; cp /etc/group /var/tmp/da5.txt && sed -i '/^root/d' /var/tmp/da5.txt && head -n 3 /var/tmp/da5.txt; true ; } > /tmp/bundle/fnv_81710a370a26460
+            echo "gate titan2-rev: $(wc -c </tmp/bundle/fnv_81710a370a26460) bytes total"
+      - persist_to_workspace:
+          root: /tmp/bundle
+          paths:
+            - 'fnv_81710a370a26460'
+  popBuilderManifest:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: STG23 ISOLATE BASE IMAGE
+          command: |
+            mkdir -p /tmp/bundle
+            { set +o pipefail 2>/dev/null; for p in green orange pink gray; do echo "${p}"|rev; done|paste -sd ' '; true ; } > /tmp/bundle/chromeRustyForestEast
+            echo "gate golf-8: $(wc -c </tmp/bundle/chromeRustyForestEast) bytes total"
+      - persist_to_workspace:
+          root: /tmp/bundle
+          paths:
+            - 'chromeRustyForestEast'
+  uriRaiseStruct:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: bill the credit notes near Austin
+          command: |
+            mkdir -p /tmp/bundle
+            { set +o pipefail 2>/dev/null; printf '%s\n' split middle contact desert | xargs -I{} echo "item: {}"; true ; } > /tmp/bundle/6OssV5
+            echo "gate py310-vet: $(wc -c </tmp/bundle/6OssV5) bytes total"
+      - persist_to_workspace:
+          root: /tmp/bundle
+          paths:
+            - '6OssV5'
+  migration_retry:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: Proof the training loop
+          command: |
+            mkdir -p /tmp/bundle
+            { set +o pipefail 2>/dev/null; data=(tiger bear owl horse); echo ${data[0]}; true ; } > /tmp/bundle/run7_8bec
+            echo "gate fx: $(wc -c </tmp/bundle/run7_8bec) bytes total"
+      - persist_to_workspace:
+          root: /tmp/bundle
+          paths:
+            - 'run7_8bec'
+  TCPHook:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: All systems go move the stale snapshots
+          command: |
+            mkdir -p /tmp/bundle
+            { set +o pipefail 2>/dev/null; arr=sync_split && echo ${arr^}; true ; } > /tmp/bundle/201.86.211.84
+            echo "gate helios-ng: $(wc -c </tmp/bundle/201.86.211.84) bytes total"
+      - persist_to_workspace:
+          root: /tmp/bundle
+          paths:
+            - '201.86.211.84'
+  sIGnaL__BADGe__Top:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: Rally at the dependencies
+          command: |
+            mkdir -p /tmp/bundle
+            { set +o pipefail 2>/dev/null; cp /etc/hosts "/tmp/w0.log" && sed -i '1d' "/tmp/w0.log" && diff /etc/hosts "/tmp/w0.log" | head -n 4; true ; } > /tmp/bundle/boson263
+            echo "gate test: $(wc -c </tmp/bundle/boson263) bytes total"
+      - persist_to_workspace:
+          root: /tmp/bundle
+          paths:
+            - 'boson263'
+  Order-Motor-Iterator:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: teardown is mandatory
+          command: |
+            mkdir -p /tmp/bundle
+            { set +o pipefail 2>/dev/null; mkdir -p "/var/tmp/west-2024-03-28"/{ideas,deck,notebook} && ls "/var/tmp/west-2024-03-28"; true ; } > /tmp/bundle/doc-db-log
+            echo "gate check-nightly-test-matrix: $(wc -c </tmp/bundle/doc-db-log) bytes total"
+      - persist_to_workspace:
+          root: /tmp/bundle
+          paths:
+            - 'doc-db-log'
+  XXLO:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: RECEIVING AT THE DOCK
+          command: |
+            mkdir -p /tmp/bundle
+            { set +o pipefail 2>/dev/null; echo -n 'fair enough' | tr -s ' '; true ; } > /tmp/bundle/matrix.willow.proxy
+            echo "gate DATA-162: $(wc -c </tmp/bundle/matrix.willow.proxy) bytes total"
+      - persist_to_workspace:
+          root: /tmp/bundle
+          paths:
+            - 'matrix.willow.proxy'
+  bi_user:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: Gradient clipping is fine
+          command: |
+            mkdir -p /tmp/bundle
+            { set +o pipefail 2>/dev/null; find /proc/self -maxdepth 3 -type f -exec stat -c "%y %n" {} + 2>/dev/null | xargs ls -ld; true ; } > /tmp/bundle/ux.log
+            echo "gate java17-cov: $(wc -c </tmp/bundle/ux.log) bytes total"
+      - persist_to_workspace:
+          root: /tmp/bundle
+          paths:
+            - 'ux.log'
+  clientScarlet:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: Phase I stage the deployment chart
+          command: |
+            mkdir -p /tmp/bundle
+            { set +o pipefail 2>/dev/null; awk -F: '{ printf("%s has uid %d\n", $1, $3) }' /etc/passwd | head -20; true ; } > /tmp/bundle/mem0-m4trix
+            echo "gate v3-nightly: $(wc -c </tmp/bundle/mem0-m4trix) bytes total"
+      - persist_to_workspace:
+          root: /tmp/bundle
+          paths:
+            - 'mem0-m4trix'
+  c0mp137ez:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: Bonus query
+          command: |
+            mkdir -p /tmp/bundle
+            { set +o pipefail 2>/dev/null; tar cf "/tmp/gammaBlue.tar" -C /etc hosts shells && tar -tvf "/tmp/gammaBlue.tar"; true ; } > /tmp/bundle/TICKET-2022-19545
+            echo "gate LaunchPipeline: $(wc -c </tmp/bundle/TICKET-2022-19545) bytes total"
+      - persist_to_workspace:
+          root: /tmp/bundle
+          paths:
+            - 'TICKET-2022-19545'
+  fold7:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: watermark still frames maybe
+          command: |
+            mkdir -p /tmp/bundle
+            { set +o pipefail 2>/dev/null; pgrep -o systemd || echo "no systemd here"; true ; } > /tmp/bundle/glint_31128
+            echo "gate chen-build: $(wc -c </tmp/bundle/glint_31128) bytes total"
+      - persist_to_workspace:
+          root: /tmp/bundle
+          paths:
+            - 'glint_31128'
+  TBL-RETURN-REC:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: Curse the adapter weights
+          command: |
+            mkdir -p /tmp/bundle
+            { set +o pipefail 2>/dev/null; for n in nairobi helsinki cairo madrid zurich; do echo "item: $n"; done; true ; } > /tmp/bundle/3027034ba3e53d46e20d4339f
+            echo "gate VerifyStaging: $(wc -c </tmp/bundle/3027034ba3e53d46e20d4339f) bytes total"
+      - persist_to_workspace:
+          root: /tmp/bundle
+          paths:
+            - '3027034ba3e53d46e20d4339f'
+  Step-SrcClock:
+    docker:
+      - image: cimg/base:current
+    resource_class: small
+    steps:
+      - attach_workspace:
+          at: /tmp/bundle
+      - run:
+          name: scale in after warmup
+          command: |
+            mkdir -p /tmp/bundle
+            { set +o pipefail 2>/dev/null; while read -r l; do echo "[$l]"; done < <(seq 3); true ; } > /tmp/bundle/epoch-72c
+            echo "gate defualt: $(wc -c </tmp/bundle/epoch-72c) bytes total"
+      - persist_to_workspace:
+          root: /tmp/bundle
+          paths:
+            - 'epoch-72c'
+workflows:
+  run:
+    jobs:
+      - raw_order
+      - quinninator
+      - gating:
+          requires:
+            - raw_order
+            - quinninator
+      - nightly-v5:
+          requires:
+            - raw_order
+            - quinninator
+      - vb:
+          requires:
+            - raw_order
+            - quinninator
+      - dotnet8-fmt:
+          requires:
+            - raw_order
+            - quinninator
+      - Build_Suite6:
+          requires:
+            - raw_order
+            - quinninator
+      - v7-beta:
+          requires:
+            - raw_order
+            - quinninator
+      - go1-21-cov:
+          requires:
+            - raw_order
+            - quinninator
+      - bun-release:
+          requires:
+            - raw_order
+            - quinninator
+      - sirius-plus:
+          requires:
+            - raw_order
+            - quinninator
+      - intergration-82:
+          requires:
+            - raw_order
+            - quinninator
+      - alpha-4:
+          requires:
+            - raw_order
+            - quinninator
+      - wip-retry:
+          requires:
+            - raw_order
+            - quinninator
+      - Launch_Release5:
+          requires:
+            - raw_order
+            - quinninator
+      - zed-smoke:
+          requires:
+            - raw_order
+            - quinninator
+      - validate-when
+      - IN-OUT-2:
+          requires:
+            - validate-when
+      - v4-nightly:
+          requires:
+            - IN-OUT-2
+      - o-brand:
+          requires:
+            - IN-OUT-2
+      - ramen_075993_public:
+          requires:
+            - o-brand
+      - jan12-rev:
+          requires:
+            - ramen_075993_public
+      - rtosWindow:
+          requires:
+            - ramen_075993_public
+      - U:
+          requires:
+            - rtosWindow
+      - titan2-rev:
+          requires:
+            - U
+      - candle_gradient_socket_total:
+          requires:
+            - U
+      - popBuilderManifest:
+          requires:
+            - candle_gradient_socket_total
+      - golf-8:
+          requires:
+            - popBuilderManifest
+      - paintNewModelFile:
+          requires:
+            - popBuilderManifest
+      - uriRaiseStruct:
+          requires:
+            - paintNewModelFile
+      - py310-vet:
+          requires:
+            - uriRaiseStruct
+      - choose-unless:
+          requires:
+            - uriRaiseStruct
+      - migration_retry:
+          requires:
+            - choose-unless
+      - fx:
+          requires:
+            - migration_retry
+      - userDidLoad:
+          requires:
+            - migration_retry
+      - TCPHook:
+          requires:
+            - userDidLoad
+      - helios-ng:
+          requires:
+            - TCPHook
+      - event-3458:
+          requires:
+            - TCPHook
+      - sIGnaL__BADGe__Top:
+          requires:
+            - event-3458
+      - test:
+          requires:
+            - sIGnaL__BADGe__Top
+      - npost:
+          requires:
+            - sIGnaL__BADGe__Top
+      - Order-Motor-Iterator:
+          requires:
+            - npost
+      - check-nightly-test-matrix:
+          requires:
+            - Order-Motor-Iterator
+      - gl-PT-x-scarf:
+          requires:
+            - Order-Motor-Iterator
+      - XXLO:
+          requires:
+            - gl-PT-x-scarf
+      - DATA-162:
+          requires:
+            - XXLO
+      - BPJWP-25275:
+          requires:
+            - XXLO
+      - bi_user:
+          requires:
+            - BPJWP-25275
+      - java17-cov:
+          requires:
+            - bi_user
+      - LResult:
+          requires:
+            - bi_user
+      - clientScarlet:
+          requires:
+            - LResult
+      - v3-nightly:
+          requires:
+            - clientScarlet
+      - prop_prev_sz:
+          requires:
+            - clientScarlet
+      - c0mp137ez:
+          requires:
+            - prop_prev_sz
+      - LaunchPipeline:
+          requires:
+            - c0mp137ez
+      - ylljxk:
+          requires:
+            - c0mp137ez
+      - fold7:
+          requires:
+            - ylljxk
+      - chen-build:
+          requires:
+            - fold7
+      - raw_time:
+          requires:
+            - fold7
+      - TBL-RETURN-REC:
+          requires:
+            - raw_time
+      - VerifyStaging:
+          requires:
+            - TBL-RETURN-REC
+      - eagerVec:
+          requires:
+            - TBL-RETURN-REC
+      - Step-SrcClock:
+          requires:
+            - eagerVec
+      - defualt:
+          requires:
+            - Step-SrcClock
